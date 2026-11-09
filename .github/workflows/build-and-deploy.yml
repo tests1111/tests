@@ -1,0 +1,32 @@
+name: "Build and Deploy"
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET Core SDK 6.0.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.x
+        include-prerelease: true
+
+    - name: Restore packages
+      run: dotnet restore
+
+    - name: Build app
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Test app
+      run: dotnet test --no-build --configuration Release
