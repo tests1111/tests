@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Cart.Api.Controllers;
 
 [ApiController]
-[Route("api/leads")]
+[Route("api/[controller]")]
 public class CartController : ControllerBase
 {
     readonly ICartService _cartService;

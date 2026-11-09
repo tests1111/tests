@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Notify.Api.Controllers;
 
 [ApiController]
-[Route("/api/[controller]")]
+[Route("/api/leads")]
 public class NotificationController : ControllerBase
 {
     readonly INotificationService _notificationService;
@@ -24,6 +24,7 @@ public class NotificationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Post([FromBody] NotificationItemModel model)
     {
+        // лучше сделат через очередь jobs или backgroundtask...
         await _notificationService.SendNotify(model);
         return Ok();
     }
